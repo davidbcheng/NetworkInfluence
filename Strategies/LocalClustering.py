@@ -18,7 +18,7 @@ largestN = heapq.nlargest(numSeeds, heap)
 seeds = [tup[1] for tup in largestN]
 
 # Write to file
-with open("%s.%s1" % (graphName, __file__[:-3]), 'w') as myfile:
+with open("Results/%s.%s" % (graphName, __file__[:-3]), 'w') as myfile:
 	for i in xrange(numTrials):
 		for node in seeds:
 			myfile.write("%d\n" % node)

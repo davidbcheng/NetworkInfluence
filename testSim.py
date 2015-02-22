@@ -22,6 +22,6 @@ graph = json.loads(data)
 nodes = {}
 for strategy in strategies:
 	nodes[strategy] = transform("Results/" + strategy)
-games = 50
+games = 1
 
 print sim.run(graph, nodes, games)

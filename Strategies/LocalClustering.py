@@ -1,24 +1,24 @@
 from graph_tool.all import *
-from loadGraph import *
+from setup import *
 import sys
+import heapq
 
 # All strategies need these two lines to set up the graph
 graphName = sys.argv[1]
 g, numPlayers, numSeeds, numTrials = load(graphName)
 
-seeds = []
-currMax = 0
-while len(seeds) < numSeeds:
-	for v in g.vertices():
-		if v.out_degree() > currMax and int(v) not in seeds:
-			currMax = v.out_degree()
-			mostDegreeVertex = v
-	currMax = 0
-	seeds.append(int(mostDegreeVertex))
+
+# Main Algorithm
+clusters = graph_tool.clustering.local_clustering(g)
+clusters = clusters.get_array()
+heap = [(elem, ind) for ind, elem in enumerate(clusters)]
+heapq.heapify(heap)
+largestN = heapq.nlargest(numSeeds, heap)
+
+seeds = [tup[1] for tup in largestN]
 
 # Write to file
 with open("%s.%s1" % (graphName, __file__[:-3]), 'w') as myfile:
 	for i in xrange(numTrials):
 		for node in seeds:
 			myfile.write("%d\n" % node)
-

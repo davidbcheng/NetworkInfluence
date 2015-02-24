@@ -9,7 +9,7 @@ g, numPlayers, numSeeds, numTrials = load(graphName)
 
 seeds = []
 currMax = 0
-while len(seeds) < 8:
+while len(seeds) < numSeeds:
 	for v in g.vertices():
 		if v.out_degree() > currMax and int(v) not in seeds:
 			currMax = v.out_degree()
@@ -17,7 +17,7 @@ while len(seeds) < 8:
 	currMax = 0
 	seeds.append(int(mostDegreeVertex))
 
-while len(seeds) < numSeeds:
+while len(seeds) < 15:
 	currMax = 0
 	v = g.vertex(seeds[0])
 	for w in v.out_neighbours():
@@ -25,6 +25,8 @@ while len(seeds) < numSeeds:
 			currMax = w.out_degree()
 			best = w
 	seeds.append(int(best))
+
+seeds = seeds[:5] + seeds[10:]
 
 
 # Write to file
